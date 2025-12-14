@@ -28,14 +28,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /app
 
-# Copy composer files
-COPY composer.json composer.lock* ./
+# Copy application files first
+COPY . .
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# Copy application files
-COPY . .
+RUN composer install --no-dev --optimize-autoloader --no-interaction || composer install --optimize-autoloader --no-interaction
 
 # Create uploads directory and set permissions
 RUN mkdir -p uploads/profile_pictures && chmod -R 777 uploads
