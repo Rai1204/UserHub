@@ -1,18 +1,29 @@
 <?php
 // MySQL Database Configuration
 class Database {
-    private $host = "localhost";
-    private $db_name = "user_management";
-    private $username = "root";
-    private $password = "root";
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
+    private $port;
     private $conn;
+
+    public function __construct() {
+        // Load environment variables or use defaults for local development
+        $this->host = getenv('DB_HOST') ?: 'localhost';
+        $this->db_name = getenv('DB_NAME') ?: 'user_management';
+        $this->username = getenv('DB_USER') ?: 'root';
+        $this->password = getenv('DB_PASS') ?: 'root';
+        $this->port = getenv('DB_PORT') ?: '3306';
+    }
 
     public function getConnection() {
         $this->conn = null;
 
         try {
+            $dsn = "mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name;
             $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->db_name,
+                $dsn,
                 $this->username,
                 $this->password
             );

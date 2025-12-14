@@ -25,3 +25,6 @@ desktop.ini
 # Ignore logs
 *.log
 error_log
+
+# Ignore test files (development only)
+dev/test/

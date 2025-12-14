@@ -199,6 +199,35 @@ http://localhost/user-management
 5. System validates code and creates account
 6. User can login immediately after verification
 
+## Deployment
+
+### Local Development
+
+The project is configured to work locally with XAMPP by default. All configuration files automatically use localhost values when environment variables are not set.
+
+### Production Deployment
+
+**Ready for deployment on:**
+- ✅ Render.com (with external databases)
+- ✅ Railway.app
+- ✅ DigitalOcean
+- ✅ Oracle Cloud
+- ✅ Any Docker-compatible hosting
+
+**Deployment files included:**
+- `Dockerfile` - Docker configuration
+- `render.yaml` - Render service configuration
+- `DEPLOYMENT.md` - Complete deployment guide
+
+**Configuration:**
+All database connections support environment variables:
+- MySQL: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASS`
+- MongoDB: `MONGODB_URI`, `MONGODB_DB`
+- Redis: `REDIS_HOST`, `REDIS_PORT`, `REDIS_PASSWORD`
+- Email: `GMAIL_USERNAME`, `GMAIL_APP_PASSWORD`
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions with external free databases.
+
 ## Notes
 
 - No PHP sessions used - all session management via localStorage and Redis
@@ -208,3 +237,4 @@ http://localhost/user-management
 - **Only Gmail addresses** are allowed for registration
 - **Email verification required** before account creation
 - Credentials stored securely in `.env` file (not in code)
+- **Environment variables** used for deployment flexibility
