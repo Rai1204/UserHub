@@ -2,7 +2,10 @@
 // Load environment variables from .env file
 
 function loadEnv($filePath) {
+    // On production (Render), environment variables are already set by the platform
+    // Only load from file for local development
     if (!file_exists($filePath)) {
+        // File doesn't exist, assume production with env vars from platform
         return;
     }
     
@@ -20,7 +23,8 @@ function loadEnv($filePath) {
             $value = trim($value);
             
             // Set as environment variable if not already set
-            if (!getenv($key)) {
+            // This allows platform env vars to take precedence
+            if (!getenv($key) && !isset($_ENV[$key])) {
                 putenv("$key=$value");
                 $_ENV[$key] = $value;
             }
