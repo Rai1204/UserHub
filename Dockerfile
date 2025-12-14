@@ -31,8 +31,8 @@ WORKDIR /app
 # Copy application files first
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction || composer install --optimize-autoloader --no-interaction
+# Install PHP dependencies (ignore platform requirements for Docker compatibility)
+RUN composer install --ignore-platform-reqs --optimize-autoloader --no-interaction
 
 # Create uploads directory and set permissions
 RUN mkdir -p uploads/profile_pictures && chmod -R 777 uploads
