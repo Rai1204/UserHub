@@ -9,11 +9,7 @@ vendor/
 # Ignore uploads
 uploads/profile_pictures/*
 !uploads/profile_pictures/.gitkeep
-dev/ 
-
-# Ignore test files
-dev/test/
-
+# Ignore cache files
 # Ignore system files
 .DS_Store
 Thumbs.db
