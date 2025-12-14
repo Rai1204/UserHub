@@ -90,6 +90,10 @@ try {
         $mail->Port = 587;
         $mail->SMTPDebug = 0;
         
+        // Set timeouts to prevent hanging
+        $mail->Timeout = 10; // Connection timeout
+        $mail->SMTPKeepAlive = false;
+        
         // Additional SMTP options for better compatibility
         $mail->SMTPOptions = array(
             'ssl' => array(
@@ -98,6 +102,9 @@ try {
                 'allow_self_signed' => true
             )
         );
+        
+        // Set script timeout
+        set_time_limit(30);
 
         // Email content
         $mail->setFrom($gmailUsername, 'UserHub');
