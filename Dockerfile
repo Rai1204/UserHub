@@ -40,5 +40,5 @@ RUN mkdir -p uploads/profile_pictures && chmod -R 777 uploads
 # Expose port
 EXPOSE 10000
 
-# Start PHP built-in server
-CMD ["php", "-S", "0.0.0.0:10000", "-t", "."]
+# Start PHP built-in server with router
+CMD ["php", "-S", "0.0.0.0:10000", "-t", ".", "router.php"]
