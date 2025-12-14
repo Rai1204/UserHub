@@ -4,8 +4,7 @@
 # Ignore vendor directory (Composer dependencies)
 vendor/
 
-# Ignore Composer lock file (optional - remove this line if you want to commit it)
-# composer.lock
+
 
 # Ignore uploads
 uploads/profile_pictures/*
