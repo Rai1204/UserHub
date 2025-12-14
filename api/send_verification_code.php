@@ -88,10 +88,19 @@ try {
         $mail->Password = $gmailPassword;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
-        $mail->SMTPDebug = 0; // Set to 2 for detailed debug output
+        $mail->SMTPDebug = 0;
+        
+        // Additional SMTP options for better compatibility
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
 
         // Email content
-        $mail->setFrom('noreply@userhub.com', 'UserHub');
+        $mail->setFrom($gmailUsername, 'UserHub');
         $mail->addAddress($data->email);
         $mail->Subject = 'Your Verification Code - UserHub';
         
@@ -140,6 +149,17 @@ try {
         $errorMessage = $e->getMessage();
         $mailerError = $mail->ErrorInfo;
         
+        // More detailed error information for debugging
+        $errorDetails = array(
+            "exception_message" => $errorMessage,
+            "mailer_error" => $mailerError,
+            "smtp_host" => $mail->Host,
+            "smtp_port" => $mail->Port,
+            "username_set" => !empty($gmailUsername),
+            "password_set" => !empty($gmailPassword),
+            "password_length" => strlen($gmailPassword)
+        );
+        
         // Check if it's a recipient/address issue
         if (stripos($errorMessage, 'recipient') !== false || 
             stripos($errorMessage, 'address') !== false ||
@@ -148,20 +168,13 @@ try {
             stripos($mailerError, 'mailbox unavailable') !== false) {
             $userMessage = "Email address not found. Please check and try again.";
         } else {
-            $userMessage = "Failed to send verification email. Please try again later.";
+            $userMessage = "Failed to send verification email: " . $mailerError;
         }
-        
-        $errorDetails = array(
-            "mailer_error" => $mailerError,
-            "exception" => $errorMessage,
-            "smtp_debug" => $mail->getSMTPInstance() ? $mail->getSMTPInstance()->getError() : null
-        );
         
         http_response_code(400);
         echo json_encode(array(
             "success" => false, 
             "message" => $userMessage,
-            "error" => $mailerError,
             "debug" => $errorDetails
         ));
     }
