@@ -1,0 +1,32 @@
+# Ignore environment variables file with sensitive credentials
+.env
+
+# Ignore vendor directory (Composer dependencies)
+vendor/
+
+# Ignore Composer lock file (optional - remove this line if you want to commit it)
+# composer.lock
+
+# Ignore uploads
+uploads/profile_pictures/*
+!uploads/profile_pictures/.gitkeep
+dev/ 
+
+# Ignore test files
+dev/test/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore logs
+*.log
+error_log

@@ -1,0 +1,10 @@
+# Enable mod_rewrite
+RewriteEngine On
+
+# Set default charset
+AddDefaultCharset UTF-8
+
+# Allow CORS
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header set Access-Control-Allow-Headers "Content-Type, Authorization"
