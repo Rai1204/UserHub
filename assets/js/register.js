@@ -71,8 +71,28 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr) {
-                const error = xhr.responseJSON?.message || 'Failed to send verification code';
-                showMessage(error, 'danger');
+                let error = 'Failed to send verification code';
+                
+                // Try to get detailed error information
+                if (xhr.responseJSON) {
+                    error = xhr.responseJSON.message || error;
+                    
+                    // Show debug info in console for troubleshooting
+                    if (xhr.responseJSON.debug) {
+                        console.error('Email Send Error Details:', xhr.responseJSON.debug);
+                        
+                        // Show more helpful error in the UI
+                        const debug = xhr.responseJSON.debug;
+                        if (debug.mailer_error) {
+                            error += '\n\nDetails: ' + debug.mailer_error;
+                        }
+                    }
+                }
+                
+                // Show error as alert for now (includes full details)
+                alert(error);
+                showMessage(error.split('\n')[0], 'danger');
+                
                 $('#sendCodeText').text('Send Verification Code');
                 $('#sendCodeSpinner').addClass('d-none');
                 $('#sendCodeBtn').prop('disabled', false);
